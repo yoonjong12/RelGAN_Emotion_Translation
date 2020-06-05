@@ -48,16 +48,17 @@ if __name__ == '__main__':
     parser.add_argument('--parallel', type=bool, help='Boolean of parallel', default=True)
     parser.add_argument('--divs', type=str, help='Batch size', default=64)
     argv = parser.parse_args()
-
+	print('args ', argv)
+	
     dataset_dir = argv.dataset_dir
     output_root_dir = argv.output_dir
     divs = argv.divs
     parallel = argv.parallel
 
     folders = glob.glob(dataset_dir + "/*")
+	print('exist folders ', folders)
     TIME = time.time()
     cores = min(len(folders), 4)
-    print(folders)
     if parallel:
         p = Pool(cores)
         p.map(process, folders)
