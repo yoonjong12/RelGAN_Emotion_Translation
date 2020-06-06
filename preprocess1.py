@@ -7,6 +7,9 @@ import argparse
 
 
 def process(folder):
+    export_dir = folder
+    os.makedirs(os.path.join(output_root_dir, export_dir), exist_ok=True)
+
     sampling_rate = 22050
     X = []
     for file in glob.glob(folder + '/*.wav'):
@@ -15,9 +18,6 @@ def process(folder):
 
         # Silence Removal
         wav_splitted = librosa.effects.split(wav, top_db=48)
-
-        export_dir = folder
-        os.makedirs(os.path.join(output_root_dir, export_dir), exist_ok=True)
 
         for s in range(wav_splitted.shape[0]):
             x = wav[wav_splitted[s][0]:wav_splitted[s][1]]
