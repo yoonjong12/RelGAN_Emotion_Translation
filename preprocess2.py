@@ -1,28 +1,20 @@
 import os
 import time
-
 from speech_tools import *
 import numpy as np
 from multiprocessing import Pool
-
-datasets_dir = "datasets_splitted/datasets"
+import argparse
 
 def process(folder):
     dataset = folder
-
     data_dir = datasets_dir
     exp_dir = os.path.join('pickles', dataset)
-
     train_A_dir = os.path.join(data_dir, folder)
-
     exp_A_dir = exp_dir
-
-    os.makedirs(exp_A_dir, exist_ok=True)
 
     sampling_rate = 22050
     num_mcep = 36
     frame_period = 5.0
-    n_frames = 128
 
     print('Loading Wavs...')
 
@@ -64,6 +56,14 @@ def process(folder):
         time_elapsed // 3600, (time_elapsed % 3600 // 60), (time_elapsed % 60 // 1)))
 
 if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description='Preprocess wav files to train RelGAN')
+
+    parser.add_argument('--dataset_dir', type=str, help='Directory for preprocess', default="datasets_splitted/datasets")
+    argv = parser.parse_args()
+    print('args ', argv)
+
+    datasets_dir = argv['dataset_dir']
+
     folders = os.listdir(datasets_dir)
     TIME= time.time()
     cores = min(len(folders), 4)
