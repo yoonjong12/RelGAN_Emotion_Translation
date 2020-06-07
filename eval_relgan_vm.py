@@ -5,13 +5,11 @@ import tensorflow as tf
 import time
 from models.relgan import RelGAN
 from speech_tools import *
+from config import *
+from hparams import *
 
 def main(arg):
     model_name = 'relgan_vm'
-    sampling_rate = 22050
-    num_mcep = 36
-    frame_period = 5.0
-    n_frames = 128
     src_speakers = os.listdir('pickles')
     exp_dir = os.path.join('pickles')
 
